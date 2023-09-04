@@ -222,7 +222,12 @@ export default function App(props) {
                           style={styles.text}
                           left={(props) => <List.Icon {...props} />}
                         >
-                          <DrawerItemList {...props} />
+                          <DrawerItemList
+                            {...props}
+                            items={props.state.routes.filter(
+                              (route) => route.name !== "Home"
+                            )}
+                          />
                         </List.Accordion>
                         <List.Accordion
                           title="Dania dnia"
@@ -292,13 +297,24 @@ export default function App(props) {
                   </DrawerContentScrollView>
                 );
               }}
-              screenOptions={{
+              // options={({ navigation }) => ({
+              //   title: item.name,
+              //   headerLeft: () => (
+              //     <TouchableOpacity
+              //       style={{ marginLeft: 20 }}
+              //       onPress={() => navigation.goBack()}
+              //     >
+              //       <Ionicons name="arrow-back" size={35} />
+              //     </TouchableOpacity>
+              //   ),
+              // })}
+              screenOptions={({ navigation }) => ({
                 headerRight: () => (
                   <TouchableOpacity>
                     <Image
                       source={require("./assets/img/Home/shopping-cart.png")}
                       style={{
-                        marginRight: 20,
+                        marginRight: 30,
                         width: 30,
                         resizeMode: "contain",
                       }}
@@ -312,23 +328,23 @@ export default function App(props) {
                   />
                 ),
                 headerTitleAlign: "center",
-                // headerLeft: () => (
-                //   <TouchableOpacity
-                //     onPress={() => {
-                //       props.navigation.openDrawer();
-                //     }}
-                //   >
-                //     <Image
-                //       source={require("./assets/img/Home/list.png")}
-                //       style={{
-                //         marginLeft: 30,
-                //         width: 40,
-                //         resizeMode: "contain",
-                //       }}
-                //     />
-                //   </TouchableOpacity>
-                // ),
-              }}
+                headerLeft: () => (
+                  <TouchableOpacity
+                    onPress={() => {
+                      navigation.openDrawer();
+                    }}
+                  >
+                    <Image
+                      source={require("./assets/img/Home/list.png")}
+                      style={{
+                        marginLeft: 30,
+                        width: 40,
+                        resizeMode: "contain",
+                      }}
+                    />
+                  </TouchableOpacity>
+                ),
+              })}
             >
               <Drawer.Screen
                 name="Home"
@@ -342,6 +358,7 @@ export default function App(props) {
                       color={focused ? "#BB0000" : Colors.textGray}
                     />
                   ),
+                  drawerItemStyle: { display: "none" },
                 }}
               />
               {Data.map((item, index) => (
@@ -352,8 +369,18 @@ export default function App(props) {
                   options={({ navigation }) => ({
                     title: item.name,
                     headerLeft: () => (
-                      <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <Ionicons name="arrow-back" size={35} />
+                      <TouchableOpacity
+                        style={{ marginLeft: 20 }}
+                        onPress={() => navigation.goBack()}
+                      >
+                        <Image
+                          source={require("./assets/img/Home/back-arrow.png")}
+                          style={{
+                            marginLeft: 10,
+                            width: 25,
+                            resizeMode: "contain",
+                          }}
+                        />
                       </TouchableOpacity>
                     ),
                   })}
