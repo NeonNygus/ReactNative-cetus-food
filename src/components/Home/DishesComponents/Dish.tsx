@@ -49,15 +49,12 @@ const Dish = ({ content }: DishProps) => {
           <Text style={textStyles(Colors.textGray, null, 11).text}>
             Tomek i inni już zamówili
           </Text>
-          <TouchableOpacity>
-            <Text
-              style={styles.orderButton}
-              onPress={() => {
-                addOrder(content.id);
-              }}
-            >
-              Dodaj
-            </Text>
+          <TouchableOpacity
+            onPress={() => {
+              addOrder(content.id);
+            }}
+          >
+            <Text style={styles.orderButton}>Dodaj</Text>
           </TouchableOpacity>
         </View>
       </View>

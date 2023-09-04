@@ -2,8 +2,10 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import Colors from "../../../../../constants/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useOrder } from "../../../../store/useOrder";
 
 const DishListElement = ({ content }) => {
+  const { addOrder } = useOrder();
   return (
     <View style={styles.container}>
       <View style={{ width: "80%" }}>
@@ -48,6 +50,7 @@ const DishListElement = ({ content }) => {
             justifyContent: "center",
             alignItems: "center",
           }}
+          onPress={() => addOrder(content.id)}
         >
           <Ionicons name="add" size={39} />
         </TouchableOpacity>

@@ -7,8 +7,8 @@ import dishesData from "../../../../../constants/dishesData";
 const DishTypeSection = ({ dishType, restaurantName }: any) => {
   return (
     <View>
-      {dishType.map((type: String) => (
-        <>
+      {dishType.map((type: String, index: Number) => (
+        <View key={index}>
           <>
             {dishesData.some(
               (item) => item.type == type && item.restaurant == restaurantName
@@ -21,7 +21,7 @@ const DishTypeSection = ({ dishType, restaurantName }: any) => {
               ) : null
             )}
           </>
-        </>
+        </View>
       ))}
     </View>
   );

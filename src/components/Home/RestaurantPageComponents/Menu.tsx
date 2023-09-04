@@ -23,21 +23,22 @@ const Menu = ({ restaurantName }: any) => {
       <View style={{ minHeight: 390 }}>
         {filter == 0 && (
           <DishTypeSection
-            dishType={["Zestaw", "Zupa", "Drugie danie"]}
+            dishType={dishTypesArray}
             restaurantName={restaurantName}
           />
         )}
         {filter == 1 && <Sorted restaurantName={restaurantName} />}
 
         {dishTypesArray.map((dishType, index) => (
-          <>
+          <View key={index}>
             {filter == index + 2 && (
               <DishTypeSection
+                key={index}
                 dishType={[dishType]}
                 restaurantName={restaurantName}
               />
             )}
-          </>
+          </View>
         ))}
       </View>
     </View>
