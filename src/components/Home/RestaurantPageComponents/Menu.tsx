@@ -2,15 +2,18 @@ import { StyleSheet, Text, View } from "react-native";
 import { useState } from "react";
 import Colors from "../../../../constants/Colors";
 import ButtonsGroup from "./MenuComponents/ButtonsGroup";
-import AllDishes from "./MenuComponents/AllDishes";
-import Soups from "./MenuComponents/Soups";
-import SetMeals from "./MenuComponents/SetMeals";
-import MainCourses from "./MenuComponents/MainCourses";
 import Sorted from "./MenuComponents/Sorted";
-const Menu = ({ restaurantName }) => {
+import DishTypeSection from "./MenuComponents/DishTypeSection";
+import { dishTypes } from "../../../../constants/dishesData";
+
+const Menu = ({ restaurantName }: any) => {
+  const dishTypesArray = [];
+  const dishTypesLength = Object.keys(dishTypes).length;
+  for (let i = 0; i < dishTypesLength; i++) {
+    dishTypesArray.push(dishTypes[i + 1]);
+  }
   const [filter, setFilter] = useState(0);
-  const [menuHeight, setMenuHeight] = useState(0);
-  function changeFilter(id) {
+  function changeFilter(id: number) {
     setFilter(id);
   }
   return (
@@ -19,15 +22,24 @@ const Menu = ({ restaurantName }) => {
       <ButtonsGroup changeFilter={changeFilter} />
       <View style={{ minHeight: 390 }}>
         {filter == 0 && (
-          <AllDishes
-            setMenuHeight={setMenuHeight}
+          <DishTypeSection
+            dishType={dishTypesArray}
             restaurantName={restaurantName}
           />
         )}
         {filter == 1 && <Sorted restaurantName={restaurantName} />}
-        {filter == 2 && <SetMeals restaurantName={restaurantName} />}
-        {filter == 3 && <Soups restaurantName={restaurantName} />}
-        {filter == 4 && <MainCourses restaurantName={restaurantName} />}
+
+        {dishTypesArray.map((dishType, index) => (
+          <View key={index}>
+            {filter == index + 2 && (
+              <DishTypeSection
+                key={index}
+                dishType={[dishType]}
+                restaurantName={restaurantName}
+              />
+            )}
+          </View>
+        ))}
       </View>
     </View>
   );
