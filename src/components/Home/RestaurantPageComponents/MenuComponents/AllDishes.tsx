@@ -4,14 +4,9 @@ import SetMeals from "./SetMeals";
 import Soups from "./Soups";
 import MainCourses from "./MainCourses";
 
-const AllDishes = ({ restaurantName, setMenuHeight }) => {
+const AllDishes = ({ restaurantName }) => {
   return (
-    <View
-      onLayout={(e) => {
-        var { x, y, width, height } = e.nativeEvent.layout;
-        setMenuHeight(height);
-      }}
-    >
+    <View>
       <SetMeals restaurantName={restaurantName} />
       <Soups restaurantName={restaurantName} />
       <MainCourses restaurantName={restaurantName} />

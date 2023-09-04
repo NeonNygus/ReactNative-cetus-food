@@ -12,7 +12,7 @@ import { TouchableHighlight } from "react-native-gesture-handler";
 import TouchableNativeFeedback from "react-native-gesture-handler/lib/typescript/components/touchables/TouchableNativeFeedback.android";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const RestaurantPage = ({ route }) => {
+const RestaurantPage = ({ route }: any) => {
   const data = route.params.content;
   return (
     <ScrollView>
