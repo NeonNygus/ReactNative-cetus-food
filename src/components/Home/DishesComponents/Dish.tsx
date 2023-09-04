@@ -1,8 +1,8 @@
-import { View, Text, StyleSheet, TextStyle } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 import { DishType } from "../Dishes";
 import Colors from "../../../../constants/Colors";
 import { TouchableOpacity } from "react-native";
-
+import restaurantsData from "../../../../constants/restaurantsData";
 import { useOrder } from "../../../store/useOrder";
 
 type DishProps = {
@@ -17,9 +17,17 @@ type DishProps = {
 
 const Dish = ({ content }: DishProps) => {
   const { addOrder } = useOrder();
+  const restaurant = restaurantsData.filter(
+    (item) => item.name == content.restaurant
+  );
   return (
     <View style={styles.container}>
-      <View></View>
+      <View style={styles.image}>
+        <Image
+          source={restaurant[0].menuImage}
+          style={{ resizeMode: "repeat", width: "100%" }}
+        />
+      </View>
       <View style={styles.info}>
         <View style={styles.infoHeader}>
           <Text style={textStyles(Colors.textGray, "700", 19).text}>
@@ -48,7 +56,7 @@ const Dish = ({ content }: DishProps) => {
                 addOrder(content.id);
               }}
             >
-              Zamów
+              Dodaj
             </Text>
           </TouchableOpacity>
         </View>
@@ -68,7 +76,7 @@ const textStyles = (color: string, weight: string | null, size: number) =>
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "column-reverse",
+    flexDirection: "column",
     margin: 7,
     width: 300,
     height: 290,
@@ -76,6 +84,9 @@ const styles = StyleSheet.create({
     borderRadius: 11,
     elevation: 4,
     overflow: "hidden",
+  },
+  image: {
+    height: "55%",
   },
   info: {
     height: "45%",
