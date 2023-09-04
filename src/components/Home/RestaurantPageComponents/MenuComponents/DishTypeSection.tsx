@@ -7,15 +7,22 @@ import dishesData from "../../../../../constants/dishesData";
 const DishTypeSection = ({ dishType, restaurantName }: any) => {
   return (
     <View>
-      {dishesData.some(
-        (item) => item.type == dishType && item.restaurant == restaurantName
-      ) && <Text style={styles.h1}>Drugie danie: </Text>}
-
-      {dishesData.map((item, index) =>
-        item.type == dishType && item.restaurant == restaurantName ? (
-          <DishListElement key={index} content={item} />
-        ) : null
-      )}
+      {dishType.map((type: String) => (
+        <>
+          <>
+            {dishesData.some(
+              (item) => item.type == type && item.restaurant == restaurantName
+            ) && <Text style={styles.h1}>{type}: </Text>}
+          </>
+          <>
+            {dishesData.map((item, index) =>
+              item.type == type && item.restaurant == restaurantName ? (
+                <DishListElement key={index} content={item} />
+              ) : null
+            )}
+          </>
+        </>
+      ))}
     </View>
   );
 };
