@@ -9,6 +9,7 @@ import {
 import { useOrder } from "../../store/useOrder";
 //content
 import data from "../../../constants/dishesData";
+import restaurantsData from "../../../constants/restaurantsData";
 
 //components
 import Dish from "./DishesComponents/Dish";
@@ -16,12 +17,11 @@ import Dish from "./DishesComponents/Dish";
 export type DishType = {
   id: number;
   name: string;
+  restaurant: string;
   description: string;
   price: number;
   type: string;
 };
-
-const windowsHeight = Dimensions.get("window").height;
 
 const Dishes = () => {
   const { orders } = useOrder();
@@ -48,7 +48,6 @@ const Dishes = () => {
 const styles = StyleSheet.create({
   container: {
     margin: "8%",
-    height: (45 / 100) * windowsHeight,
   },
   dishesHeader: {
     flexDirection: "row",

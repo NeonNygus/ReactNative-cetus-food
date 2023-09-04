@@ -14,6 +14,7 @@ export default [
     pricesRange: [9, 23],
     rating: 2,
     image: require("../assets/img/Restaurants/Majeranek.png"),
+    menuImage: require("../assets/img/Restaurants/Majeranek_menu.png"),
   },
   {
     id: 2,
@@ -25,5 +26,6 @@ export default [
     pricesRange: [20, 33],
     rating: 4,
     image: require("../assets/img/Restaurants/Proza.png"),
+    menuImage: require("../assets/img/Restaurants/Proza_menu.png"),
   },
 ];

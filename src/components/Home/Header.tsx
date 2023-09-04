@@ -48,7 +48,7 @@ const Header = () => {
             )}
             <Clock />
           </View>
-          <OrderEditor />
+          {/* <OrderEditor /> */}
         </View>
       )}
     </>
@@ -57,7 +57,6 @@ const Header = () => {
 
 const styles = StyleSheet.create({
   container: {
-    height: (36 / 100) * windowsHeight,
     width: "100%",
     padding: "8%",
   },
