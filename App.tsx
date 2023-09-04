@@ -272,7 +272,7 @@ export default function App(props) {
                           onPress={() => {}}
                         />
                         <DrawerItem
-                          label="Pomocy!"
+                          label="Pomoc"
                           labelStyle={styles.text}
                           onPress={() => {}}
                         />
