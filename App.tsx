@@ -43,7 +43,18 @@ import DishOfTheDayPage from "./src/screens/DrawerScreens/DishOfTheDayPage";
 
 const Drawer = createDrawerNavigator();
 
-export default function App(props) {
+const settingsNavItems = [
+  {
+    label: "Panel Admina",
+    href: "Admin Page",
+  },
+  {
+    label: "Panel zamawiającego",
+    href: "Orderer Page",
+  },
+];
+
+export default function App() {
   const { user } = useUser();
   const { logged, logOut } = useLogin();
   const { clearOrders } = useOrder();
@@ -62,9 +73,9 @@ export default function App(props) {
     <SafeAreaProvider>
       {start && <Start />}
 
-      {logged ? (
+      {logged && user ? (
         <GestureHandlerRootView style={{ flex: 1 }}>
-          {user.orderer == true && orderer == true && (
+          {user?.orderer == true && orderer == true && (
             <Orderer setOrderer={setOrderer} />
           )}
           <NavigationContainer>
@@ -117,10 +128,8 @@ export default function App(props) {
                           title="Dostępne restauracje"
                           titleStyle={{
                             fontSize: 13,
-                            marginLeft: -15,
                           }}
                           style={styles.text}
-                          left={(props) => <List.Icon {...props} />}
                         >
                           <DrawerItemList
                             {...props}
@@ -142,7 +151,17 @@ export default function App(props) {
                         style={styles.drawerSection}
                         titleStyle={styles.h1}
                       >
-                        <DrawerItem
+                        {settingsNavItems.map((item) => (
+                          <DrawerItem
+                            key={item.href}
+                            label={item.label}
+                            labelStyle={styles.text}
+                            onPress={() => {
+                              props.navigation.navigate(item.href);
+                            }}
+                          />
+                        ))}
+                        {/* <DrawerItem
                           label="Panel admina"
                           labelStyle={styles.text}
                           onPress={() => {
@@ -155,7 +174,7 @@ export default function App(props) {
                           onPress={() => {
                             props.navigation.navigate("Orderer Page");
                           }}
-                        />
+                        /> */}
                         <DrawerItem
                           label="Moje zamówienia"
                           labelStyle={styles.text}
@@ -177,11 +196,11 @@ export default function App(props) {
                             props.navigation.navigate("MyBalance Page");
                           }}
                         />
-                        <DrawerItem
+                        {/* <DrawerItem
                           label="Ustawienia"
                           labelStyle={styles.text}
                           onPress={() => {}}
-                        />
+                        /> */}
                         <DrawerItem
                           label="Pomoc"
                           labelStyle={styles.text}
