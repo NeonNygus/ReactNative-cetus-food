@@ -1,12 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-  TouchableOpacity,
-  Button,
-  Image,
-} from "react-native";
+import { StyleSheet, View, TouchableOpacity, Image } from "react-native";
 import React, { useState, useEffect } from "react";
 import {
   Gesture,
@@ -19,13 +11,14 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
-import Colors from "../../../constants/Colors";
+import Colors from "../../constants/Colors";
 
-import dishesData from "../../../constants/dishesData";
+import dishesData from "../../constants/dishesData";
 
-import { useOrder } from "../../store/useOrder";
+import { useOrder } from "../store/useOrder";
 //components
-import Order from "./BottomSheetComponents.tsx/Order";
+import Order from "./BottomSheetComponents/Order";
+import { MyText } from "../../constants/DefaultElements";
 
 const BottomSheet = () => {
   const { orders } = useOrder();
@@ -117,13 +110,13 @@ const BottomSheet = () => {
                 width: "100%",
                 margin: 0,
               }}
-              source={require("../../../assets/img/Home/BottomSheet/Frame.png")}
+              source={require("../../assets/img/BottomSheet/Frame.png")}
             />
           </View>
           <View style={{ backgroundColor: Colors.textGray, height: "100%" }}>
             {modalShown && !modalUnfolded ? (
               <>
-                <View style={{ height: 209 }}>
+                <View style={{ height: "100%" }}>
                   <View
                     style={{
                       width: "80%",
@@ -132,15 +125,9 @@ const BottomSheet = () => {
                       height: "70%",
                     }}
                   >
-                    <Text
-                      style={{
-                        color: "#fff",
-                        fontWeight: "700",
-                        fontSize: 18,
-                      }}
-                    >
+                    <MyText fz={18} fw="700" white>
                       Moje zamówienie
-                    </Text>
+                    </MyText>
                     <View
                       style={{
                         height: "40%",
@@ -150,18 +137,13 @@ const BottomSheet = () => {
                         alignItems: "center",
                       }}
                     >
-                      <Text style={{ color: "#fff" }}>
-                        Kwota mojego zamówienia
-                      </Text>
-                      <Text
-                        style={{
-                          color: "#fff",
-                          fontWeight: "700",
-                          fontSize: 18,
-                        }}
-                      >
-                        {price}zł
-                      </Text>
+                      <MyText co="white">Kwota mojego zamówienia</MyText>
+                      <MyText fz={18} fw="700" white>
+                        {new Intl.NumberFormat("pl-PL", {
+                          style: "currency",
+                          currency: "PLN",
+                        }).format(price)}
+                      </MyText>
                     </View>
                   </View>
                 </View>
@@ -170,11 +152,9 @@ const BottomSheet = () => {
               <View>
                 <View style={styles.summary}>
                   <View style={[styles.textElement, { alignItems: "center" }]}>
-                    <Text
-                      style={{ color: "#fff", fontWeight: "700", fontSize: 20 }}
-                    >
+                    <MyText fz={20} fw="700" co="white">
                       Twoje zamówienie
-                    </Text>
+                    </MyText>
                   </View>
                   <View
                     style={[
@@ -189,17 +169,15 @@ const BottomSheet = () => {
                       }}
                     >
                       <View style={{ width: "93%" }}>
-                        {orders != null ? (
-                          orders.map((item) => (
-                            <Order
-                              key={item.orderId}
-                              orderId={item.orderId}
-                              content={dishesData[item.dishId - 1]}
-                            />
-                          ))
-                        ) : (
-                          <Text>null</Text>
-                        )}
+                        {orders != null
+                          ? orders.map((item) => (
+                              <Order
+                                key={item.orderId}
+                                orderId={item.orderId}
+                                content={dishesData[item.dishId - 1]}
+                              />
+                            ))
+                          : null}
                       </View>
                     </ScrollView>
                   </View>
@@ -211,18 +189,15 @@ const BottomSheet = () => {
                         justifyContent: "space-between",
                       }}
                     >
-                      <Text style={{ color: "#fff", fontWeight: "700" }}>
+                      <MyText fw="700" co="white">
                         Kwota do zapłaty:
-                      </Text>
-                      <Text
-                        style={{
-                          color: "#fff",
-                          fontWeight: "700",
-                          fontSize: 18,
-                        }}
-                      >
-                        {price}zł
-                      </Text>
+                      </MyText>
+                      <MyText fz={18} fw="700" co="white">
+                        {new Intl.NumberFormat("pl-PL", {
+                          style: "currency",
+                          currency: "PLN",
+                        }).format(price)}
+                      </MyText>
                     </View>
                   </View>
                 </View>
@@ -240,21 +215,19 @@ const BottomSheet = () => {
             style={[styles.button]}
             onPress={() => setModalUnfolded(true)}
           >
-            <Text style={{ color: "#fff", fontWeight: "700", fontSize: 20 }}>
+            <MyText fz={20} fw="700" co="white">
               Zobacz co zamawiam
-            </Text>
+            </MyText>
           </TouchableOpacity>
         ) : modalShown && modalUnfolded ? (
           <TouchableOpacity style={[styles.button]}>
-            <Text style={{ color: "#fff", fontWeight: "700", fontSize: 20 }}>
+            <MyText fz={20} fw="700" co="white">
               Zamawiam
-            </Text>
+            </MyText>
           </TouchableOpacity>
         ) : (
           <TouchableOpacity style={[styles.button]}>
-            <Text
-              style={{ color: "#fff", fontWeight: "700", fontSize: 20 }}
-            ></Text>
+            <MyText></MyText>
           </TouchableOpacity>
         )}
       </Animated.View>

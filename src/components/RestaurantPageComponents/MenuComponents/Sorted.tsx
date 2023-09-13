@@ -1,8 +1,7 @@
-import { StyleSheet, Text, View } from "react-native";
-import { useState } from "react";
-import Colors from "../../../../../constants/Colors";
+import { StyleSheet, View } from "react-native";
+import Colors from "../../../../constants/Colors";
 import DishListElement from "./DishListElement";
-import dishesData from "../../../../../constants/dishesData";
+import dishesData from "../../../../constants/dishesData";
 
 const Sorted = ({ restaurantName }) => {
   const sortedMeals = dishesData.sort((a, b) => {
@@ -20,11 +19,3 @@ const Sorted = ({ restaurantName }) => {
 };
 
 export default Sorted;
-
-const styles = StyleSheet.create({
-  h1: {
-    color: Colors.textGray,
-    fontWeight: "700",
-    fontSize: 26,
-  },
-});

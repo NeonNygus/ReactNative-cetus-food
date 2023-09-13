@@ -1,18 +1,10 @@
-import {
-  View,
-  Text,
-  FlatList,
-  StyleSheet,
-  Dimensions,
-  ScrollView,
-} from "react-native";
-import { useOrder } from "../../store/useOrder";
+import { View, FlatList, StyleSheet } from "react-native";
 //content
 import data from "../../../constants/dishesData";
-import restaurantsData from "../../../constants/restaurantsData";
 
 //components
 import Dish from "./DishesComponents/Dish";
+import { MyText } from "../../../constants/DefaultElements";
 
 export type DishType = {
   id: number;
@@ -23,33 +15,34 @@ export type DishType = {
   type: string;
 };
 
-const Dishes = () => {
-  const { orders } = useOrder();
-  console.log(orders);
+const Dishes = ({ navigateToDish }) => {
   return (
     <View style={styles.container}>
       <View style={styles.dishesHeader}>
-        <Text style={{ fontSize: 18, fontWeight: "700" }}>
+        <MyText fz={18} fw="700">
           Zamów to co znajomi
-        </Text>
-        <Text>Więcej...</Text>
+        </MyText>
+        <MyText>Więcej...</MyText>
       </View>
 
       <FlatList
+        style={{ overflow: "visible" }}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         data={data}
-        renderItem={({ item }) => <Dish content={item} />}
+        renderItem={({ item }) => (
+          <Dish content={item} navigateToDish={navigateToDish} />
+        )}
+        ItemSeparatorComponent={() => <View style={{ width: 17 }} />}
       />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    margin: "8%",
-  },
+  container: { gap: 5 },
   dishesHeader: {
+    width: "95%",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",

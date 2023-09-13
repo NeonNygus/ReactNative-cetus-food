@@ -1,9 +1,13 @@
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image, Dimensions } from "react-native";
 import { DishType } from "../Dishes";
 import Colors from "../../../../constants/Colors";
 import { TouchableOpacity } from "react-native";
 import restaurantsData from "../../../../constants/restaurantsData";
 import { useOrder } from "../../../store/useOrder";
+
+import { MyText } from "../../../../constants/DefaultElements";
+
+const windowWidth = Dimensions.get("window").width;
 
 type DishProps = {
   content: DishType;
@@ -15,13 +19,16 @@ type DishProps = {
 //   size: number;
 // };
 
-const Dish = ({ content }: DishProps) => {
+const Dish = ({ content, navigateToDish }) => {
   const { addOrder } = useOrder();
   const restaurant = restaurantsData.filter(
     (item) => item.name == content.restaurant
   );
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() => navigateToDish(content.name)}
+    >
       <View style={styles.image}>
         <Image
           source={restaurant[0].menuImage}
@@ -30,57 +37,48 @@ const Dish = ({ content }: DishProps) => {
       </View>
       <View style={styles.info}>
         <View style={styles.infoHeader}>
-          <Text style={textStyles(Colors.textGray, "700", 19).text}>
+          <MyText fz={19} fw="700">
             {content.name}
-          </Text>
-          <Text style={textStyles(Colors.textGray, "700", 22).text}>
+          </MyText>
+          <MyText fz={22} fw="700">
             {new Intl.NumberFormat("pl-PL", {
               style: "currency",
               currency: "PLN",
             }).format(content.price)}
-          </Text>
+          </MyText>
         </View>
         <View style={styles.infoDesc}>
-          <Text style={textStyles(Colors.shadedText, null, 12).text}>
+          <MyText fz={12} co="shaded">
             {content.description}
-          </Text>
+          </MyText>
         </View>
         <View style={styles.infoFooter}>
-          <Text style={textStyles(Colors.textGray, null, 11).text}>
-            Tomek i inni już zamówili
-          </Text>
+          <MyText fz={11}>Tomek i inni już zamówili</MyText>
           <TouchableOpacity
             onPress={() => {
               addOrder(content.id);
             }}
           >
-            <Text style={styles.orderButton}>Dodaj</Text>
+            <MyText style={styles.orderButton}>Dodaj</MyText>
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
-
-const textStyles = (color: string, weight: string | null, size: number) =>
-  StyleSheet.create({
-    text: {
-      color: color,
-      fontWeight: weight,
-      fontSize: size,
-    },
-  });
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
-    margin: 7,
-    width: 300,
-    height: 290,
-    backgroundColor: "#ddd",
+    // width: 300,
+    // height: 290,
+    width: (7.7 / 10) * windowWidth,
+    height: (7 / 10) * windowWidth,
     borderRadius: 11,
     elevation: 4,
     overflow: "hidden",
+    marginVertical: 7,
+    marginHorizontal: 5,
   },
   image: {
     height: "55%",
@@ -116,7 +114,6 @@ const styles = StyleSheet.create({
     paddingLeft: 19,
     paddingBottom: 16,
     paddingRight: 22,
-    borderStyle: "solid",
     borderColor: Colors.primary,
     borderWidth: 1,
     borderRadius: 13,

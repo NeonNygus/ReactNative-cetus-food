@@ -24,12 +24,21 @@ import dishesData from "../../../constants/dishesData";
 
 import { useOrder } from "../../store/useOrder";
 //components
-import Order from "./BottomSheetComponents.tsx/Order";
+import Order from "./BottomSheetComponents/Order";
+
+type modalHeight = 0 | 200 | 700;
+type buttonHeight = 0 | 60;
 
 const BottomSheet = () => {
-  const translateY = useSharedValue(40);
-  const buttonHeight = useSharedValue(0);
-  const context = useSharedValue({ y: 40 });
+  const { orders } = useOrder();
+
+  const [modalHeight, setModalHeight] = useState<modalHeight>(0);
+  const [buttonHeight, setButtonHeight] = useState<buttonHeight>(0);
+  const [price, setPrice] = useState<number>(0);
+
+  const translateY = useSharedValue(0);
+  const buttonY = useSharedValue(0);
+  const context = useSharedValue({ y: 0 });
 
   const gesture = Gesture.Pan()
     .onStart(() => {
@@ -38,23 +47,36 @@ const BottomSheet = () => {
     .onUpdate((event) => {
       translateY.value = -event.translationY + context.value.y;
       translateY.value = Math.min(translateY.value, 700);
-      translateY.value = Math.max(translateY.value, 40);
+      translateY.value = Math.max(translateY.value, 0);
     })
     .onEnd(() => {
-      translateY.value > 420
-        ? ((translateY.value = withSpring(700, {
-            damping: 50,
-          })),
-          (buttonHeight.value = withSpring(60, { damping: 350 })))
-        : translateY.value < 420 && translateY.value >= 150
-        ? ((translateY.value = withSpring(200, { damping: 50 })),
-          (buttonHeight.value = withSpring(60, { damping: 350 })))
-        : translateY.value < 150
-        ? ((translateY.value = withSpring(0, { damping: 50 })),
-          (buttonHeight.value = withSpring(0, { damping: 350 })))
-        : null;
+      runOnJS(setHeight)(
+        translateY.value > 420
+          ? 700
+          : translateY.value <= 420 && translateY.value >= 150
+          ? 200
+          : 0
+      );
     });
 
+  function setHeight(height) {
+    setModalHeight(height);
+    translateY.value = withSpring(height, {
+      damping: 50,
+    });
+    setButtonHeight(height == 700 ? 60 : height == 200 ? 60 : 0);
+    buttonY.value = withSpring(buttonHeight, { damping: 350 });
+  }
+  useEffect(() => {
+    orders.length == 0 && setHeight(0);
+    orders.length > 0 && modalHeight == 0 && setHeight(200);
+  }, [orders]);
+  useEffect(() => {
+    setPrice(0),
+      orders.map((item) =>
+        setPrice((price) => price + dishesData[item.dishId - 1].price)
+      );
+  }, [orders]);
   const rBottomSheetStyle = useAnimatedStyle(() => {
     return {
       height: translateY.value,
@@ -62,14 +84,14 @@ const BottomSheet = () => {
   });
   const ButtonStyle = useAnimatedStyle(() => {
     return {
-      height: buttonHeight.value,
+      height: buttonY.value,
     };
   });
   return (
     <>
       <GestureDetector gesture={gesture}>
         <Animated.View style={[styles.container, rBottomSheetStyle]}>
-          {translateY.value <= 200 ? (
+          {modalHeight == 200 ? (
             <>
               <View style={{ height: 209 }}>
                 <View
@@ -108,13 +130,13 @@ const BottomSheet = () => {
                         fontSize: 18,
                       }}
                     >
-                      69zł
+                      {price}zł
                     </Text>
                   </View>
                 </View>
               </View>
             </>
-          ) : translateY.value <= 700 ? (
+          ) : modalHeight == 700 ? (
             <View>
               <View style={styles.summary}>
                 <View style={[styles.textElement, { alignItems: "center" }]}>
@@ -135,7 +157,21 @@ const BottomSheet = () => {
                     contentContainerStyle={{
                       width: "94%",
                     }}
-                  ></ScrollView>
+                  >
+                    <View style={{ width: "93%" }}>
+                      {orders != null ? (
+                        orders.map((item) => (
+                          <Order
+                            key={item.orderId}
+                            orderId={item.orderId}
+                            content={dishesData[item.dishId - 1]}
+                          />
+                        ))
+                      ) : (
+                        <Text>null</Text>
+                      )}
+                    </View>
+                  </ScrollView>
                 </View>
                 <View style={[styles.textElement, { alignItems: "center" }]}>
                   <View
@@ -154,7 +190,9 @@ const BottomSheet = () => {
                         fontWeight: "700",
                         fontSize: 18,
                       }}
-                    ></Text>
+                    >
+                      {price}zł
+                    </Text>
                   </View>
                 </View>
               </View>
@@ -166,13 +204,16 @@ const BottomSheet = () => {
       </GestureDetector>
 
       <Animated.View style={ButtonStyle}>
-        {translateY.value <= 200 ? (
-          <TouchableOpacity style={[styles.button]}>
+        {modalHeight == 200 ? (
+          <TouchableOpacity
+            style={[styles.button]}
+            onPress={() => setHeight(700)}
+          >
             <Text style={{ color: "#fff", fontWeight: "700", fontSize: 20 }}>
               Zobacz co zamawiam
             </Text>
           </TouchableOpacity>
-        ) : translateY.value <= 700 ? (
+        ) : modalHeight == 700 ? (
           <TouchableOpacity style={[styles.button]}>
             <Text style={{ color: "#fff", fontWeight: "700", fontSize: 20 }}>
               Zamawiam

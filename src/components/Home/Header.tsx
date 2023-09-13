@@ -1,15 +1,11 @@
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useUser } from "../../store/useUser";
 import { useAfter } from "../../store/useAfter";
-//styles
-import Colors from "../../../constants/Colors";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 //components
-import Clock from "./HeaderComponents/Clock";
+import Clock from "../Clock";
 import OrderEditor from "./HeaderComponents/OrderEditor";
-
-const windowsHeight = Dimensions.get("window").height;
+import { MyText } from "../../../constants/DefaultElements";
 
 const Header = () => {
   const { user } = useUser();
@@ -19,32 +15,32 @@ const Header = () => {
       {user != null && (
         <View style={styles.container}>
           <View>
-            <Text style={styles.h1}>Cześć {user.name}!</Text>
+            <MyText fz={30} fw="700">
+              Cześć {user.name}!
+            </MyText>
             {user.orderer ? (
-              <Text style={styles.h2}>
+              <MyText fz={14}>
                 Pamiętaj, dzisiaj jesteś{" "}
-                <Text style={{ color: Colors.primary, fontWeight: "500" }}>
+                <MyText fz={14} fw="500" co="primary">
                   ZAMAWIAJĄCYM
-                </Text>
-              </Text>
+                </MyText>
+              </MyText>
             ) : (
-              <Text style={styles.h2}>
+              <MyText fz={14}>
                 Życzymy ci{" "}
-                <Text style={{ color: Colors.primary, fontWeight: "500" }}>
+                <MyText fz={14} fw="500" co="primary">
                   smaczengo jedzonka :)
-                </Text>
-              </Text>
+                </MyText>
+              </MyText>
             )}
           </View>
           <View style={styles.clock}>
-            {after == null ? (
-              <Text style={styles.h3}></Text>
-            ) : after == true ? (
-              <Text style={styles.h3}>Twój czas na zamówienie minął</Text>
+            {after == null ? null : after == true ? (
+              <MyText fz={12}>Twój czas na zamówienie minął</MyText>
             ) : (
-              <Text style={styles.h3}>
+              <MyText fz={12}>
                 Masz jeszcze trochę czasu, aby złożyć zamówienie
-              </Text>
+              </MyText>
             )}
             <Clock />
           </View>
@@ -58,20 +54,6 @@ const Header = () => {
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    padding: "8%",
-  },
-  h1: {
-    fontSize: 30,
-    fontWeight: "700",
-    color: Colors.textGray,
-  },
-  h2: {
-    fontSize: 14,
-    color: Colors.textGray,
-  },
-  h3: {
-    fontSize: 12,
-    color: Colors.textGray,
   },
   clock: {
     width: "100%",

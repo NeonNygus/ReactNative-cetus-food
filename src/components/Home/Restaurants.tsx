@@ -1,10 +1,11 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 
 //content
 import data from "../../../constants/restaurantsData";
 
 //components
 import Restaurant from "./RestaurantsComponents/Restaurant";
+import { MyText } from "../../../constants/DefaultElements";
 
 export type RestaurantType = {
   id: number;
@@ -15,27 +16,32 @@ export type RestaurantType = {
   rating: number;
 };
 
-const Restaurants = () => {
+const Restaurants = ({ navigateToRestaurant }) => {
   return (
     <View style={styles.container}>
       <View style={styles.dishesHeader}>
-        <Text style={{ fontSize: 18, fontWeight: "700" }}>
+        <MyText fz={18} fw="700">
           Lista restauracji
-        </Text>
-        <Text>Więcej...</Text>
+        </MyText>
+        <MyText>Więcej...</MyText>
       </View>
-      {data.map((item) => (
-        <Restaurant key={item.id} content={item} />
-      ))}
+      <View style={{ alignItems: "center", gap: 10 }}>
+        {data.map((item) => (
+          <Restaurant
+            key={item.id}
+            content={item}
+            navigateToRestaurant={navigateToRestaurant}
+          />
+        ))}
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    margin: "8%",
-  },
+  container: { gap: 10 },
   dishesHeader: {
+    width: "95%",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",

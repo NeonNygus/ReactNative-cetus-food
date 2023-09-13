@@ -1,19 +1,25 @@
 import { View, StyleSheet, ScrollView } from "react-native";
-import { useState } from "react";
+
 //components
 import Header from "../components/Home/Header";
 import Dishes from "../components/Home/Dishes";
 import Restaurants from "../components/Home/Restaurants";
-import BottomSheet from "../components/Home/BottomSheet";
+import BottomSheet from "../components/BottomSheet";
+export default function Home({ navigation }) {
+  function navigateToRestaurant(name) {
+    navigation.navigate(name);
+  }
+  function navigateToDish(name) {
+    navigation.navigate(name);
+  }
 
-export default function Home() {
   return (
     <>
       <ScrollView>
         <View style={styles.container}>
           <Header />
-          <Dishes />
-          <Restaurants />
+          <Dishes navigateToDish={navigateToDish} />
+          <Restaurants navigateToRestaurant={navigateToRestaurant} />
         </View>
       </ScrollView>
 
@@ -24,7 +30,8 @@ export default function Home() {
 
 const styles = StyleSheet.create({
   container: {
-    gap: -30,
     backgroundColor: "#fff",
+    padding: 30,
+    gap: 30,
   },
 });

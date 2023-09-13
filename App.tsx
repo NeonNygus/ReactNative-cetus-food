@@ -22,15 +22,24 @@ import Start from "./src/screens/Start";
 import Login from "./src/screens/Login";
 import Home from "./src/screens/Home";
 import RestaurantPage from "./src/screens/DrawerScreens/RestaurantPage";
+import SingleDishPage from "./src/screens/DrawerScreens/SingleDishPage";
+import OrdererPage from "./src/screens/DrawerScreens/OrdererPage";
+import MyBalancePage from "./src/screens/DrawerScreens/MyBalancePage";
+import MyOrdersPage from "./src/screens/DrawerScreens/MyOrdersPage";
+import HelpPage from "./src/screens/DrawerScreens/HelpPage";
+import MyAccountPage from "./src/screens/DrawerScreens/MyAccountPage";
+import AdminPage from "./src/screens/DrawerScreens/AdminPage";
 
 //components
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import Orderer from "./src/screens/Orderer";
 import Colors from "./constants/Colors";
-import Clock from "./src/components/Home/HeaderComponents/Clock";
+import Clock from "./src/components/Clock";
 
 //content
 import Data from "./constants/restaurantsData";
+import dishesData from "./constants/dishesData";
+import DishOfTheDayPage from "./src/screens/DrawerScreens/DishOfTheDayPage";
 
 const Drawer = createDrawerNavigator();
 
@@ -59,115 +68,6 @@ export default function App(props) {
             <Orderer setOrderer={setOrderer} />
           )}
           <NavigationContainer>
-            {/* 
-            <Drawer.Navigator
-              drawerContent={(props) => {
-                return (
-                  <DrawerContentScrollView
-                    {...props}
-                    contentContainerStyle={{
-                      height: "100%",
-                    }}
-                  >
-                    <View style={{ height: "10%", flexDirection: "row" }}>
-                      <View
-                        style={{
-                          height: "100%",
-                          width: "30%",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <Ionicons name="person" size={30} />
-                      </View>
-                      <View
-                        style={{
-                          height: "100%",
-                          width: "70%",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <Text style={{ fontSize: 23 }}>{user?.name}</Text>
-                      </View>
-                    </View>
-                    <DrawerItemList {...props} />
-                    <DrawerItem
-                      label="Wyloguj się"
-                      icon={() => (
-                        <Ionicons
-                          name="log-out"
-                          size={30}
-                          color={Colors.textGray}
-                        />
-                      )}
-                      onPress={() => (logOut(), clearOrders())}
-                    />
-                  </DrawerContentScrollView>
-                );
-              }}
-              screenOptions={{
-                headerRight: () => (
-                  <TouchableOpacity>
-                    <Image
-                      source={require("./assets/img/Home/shopping-cart.png")}
-                      style={{
-                        marginRight: 20,
-                        width: 30,
-                        resizeMode: "contain",
-                      }}
-                    />
-                  </TouchableOpacity>
-                ),
-                headerTitle: () => (
-                  <Image
-                    source={require("./assets/img/Home/DrawerHeader.png")}
-                    style={{ width: 140, resizeMode: "contain" }}
-                  />
-                ),
-                headerTitleAlign: "center",
-                // headerLeft: () => (
-                //   <Image
-                //     source={require("./assets/img/Home/list.png")}
-                //     style={{
-                //       marginLeft: 30,
-                //       width: 40,
-                //       resizeMode: "contain",
-                //     }}
-                //   />
-                // ),
-              }}
-            >
-              <Drawer.Screen
-                name="Home"
-                component={Home}
-                options={{
-                  drawerLabel: "Panel główny",
-                  drawerIcon: ({ focused }) => (
-                    <Ionicons
-                      name="home"
-                      size={30}
-                      color={focused ? "#BB0000" : Colors.textGray}
-                    />
-                  ),
-                }}
-              />
-              <Drawer.Screen
-                name="Orders"
-                component={Orders}
-                options={{
-                  drawerLabel: "Twoje zamówienia",
-                  drawerIcon: ({ focused }) => (
-                    <Ionicons
-                      name="basket"
-                      size={30}
-                      color={focused ? "#BB0000" : Colors.textGray}
-                    />
-                  ),
-                  headerRight: undefined,
-                }}
-              />
-            </Drawer.Navigator> 
-            */}
             <Drawer.Navigator
               drawerContent={(props) => {
                 return (
@@ -203,7 +103,7 @@ export default function App(props) {
                       >
                         <Image
                           style={{ width: "60%", resizeMode: "contain" }}
-                          source={require("./assets/img/Home/DrawerHeader.png")}
+                          source={require("./assets/img/Drawer/DrawerHeader.png")}
                         />
                       </View>
                     </View>
@@ -229,22 +129,13 @@ export default function App(props) {
                             )}
                           />
                         </List.Accordion>
-                        <List.Accordion
-                          title="Dania dnia"
-                          titleStyle={{
-                            fontSize: 13,
-                            marginLeft: -15,
+                        <DrawerItem
+                          label="Dania dnia"
+                          labelStyle={styles.text}
+                          onPress={() => {
+                            props.navigation.navigate("DishOfTheDay Page");
                           }}
-                          style={styles.text}
-                          left={(props) => <List.Icon {...props} />}
-                        >
-                          <DrawerItem
-                            label="Majeranek"
-                            onPress={() =>
-                              props.navigation.navigate("Restaurant")
-                            }
-                          />
-                        </List.Accordion>
+                        />
                       </List.Section>
                       <List.Section
                         title="Ustawienia"
@@ -252,24 +143,39 @@ export default function App(props) {
                         titleStyle={styles.h1}
                       >
                         <DrawerItem
+                          label="Panel admina"
+                          labelStyle={styles.text}
+                          onPress={() => {
+                            props.navigation.navigate("Admin Page");
+                          }}
+                        />
+                        <DrawerItem
                           label="Panel zamawiającego"
                           labelStyle={styles.text}
-                          onPress={() => {}}
+                          onPress={() => {
+                            props.navigation.navigate("Orderer Page");
+                          }}
                         />
                         <DrawerItem
                           label="Moje zamówienia"
                           labelStyle={styles.text}
-                          onPress={() => {}}
+                          onPress={() => {
+                            props.navigation.navigate("MyOrders Page");
+                          }}
                         />
                         <DrawerItem
                           label="Moje konto"
                           labelStyle={styles.text}
-                          onPress={() => {}}
+                          onPress={() => {
+                            props.navigation.navigate("MyAccount Page");
+                          }}
                         />
                         <DrawerItem
                           label="Mój bilans"
                           labelStyle={styles.text}
-                          onPress={() => {}}
+                          onPress={() => {
+                            props.navigation.navigate("MyBalance Page");
+                          }}
                         />
                         <DrawerItem
                           label="Ustawienia"
@@ -279,7 +185,9 @@ export default function App(props) {
                         <DrawerItem
                           label="Pomoc"
                           labelStyle={styles.text}
-                          onPress={() => {}}
+                          onPress={() => {
+                            props.navigation.navigate("Help Page");
+                          }}
                         />
                       </List.Section>
                     </View>
@@ -297,33 +205,10 @@ export default function App(props) {
                   </DrawerContentScrollView>
                 );
               }}
-              // options={({ navigation }) => ({
-              //   title: item.name,
-              //   headerLeft: () => (
-              //     <TouchableOpacity
-              //       style={{ marginLeft: 20 }}
-              //       onPress={() => navigation.goBack()}
-              //     >
-              //       <Ionicons name="arrow-back" size={35} />
-              //     </TouchableOpacity>
-              //   ),
-              // })}
               screenOptions={({ navigation }) => ({
-                headerRight: () => (
-                  <TouchableOpacity>
-                    <Image
-                      source={require("./assets/img/Home/shopping-cart.png")}
-                      style={{
-                        marginRight: 30,
-                        width: 30,
-                        resizeMode: "contain",
-                      }}
-                    />
-                  </TouchableOpacity>
-                ),
                 headerTitle: () => (
                   <Image
-                    source={require("./assets/img/Home/DrawerHeader.png")}
+                    source={require("./assets/img/Drawer/DrawerHeader.png")}
                     style={{ width: 140, resizeMode: "contain" }}
                   />
                 ),
@@ -335,7 +220,7 @@ export default function App(props) {
                     }}
                   >
                     <Image
-                      source={require("./assets/img/Home/list.png")}
+                      source={require("./assets/img/Drawer/list.png")}
                       style={{
                         marginLeft: 30,
                         width: 40,
@@ -361,6 +246,219 @@ export default function App(props) {
                   drawerItemStyle: { display: "none" },
                 }}
               />
+              <Drawer.Screen
+                name="DishOfTheDay Page"
+                component={DishOfTheDayPage}
+                options={({ navigation }) => ({
+                  drawerLabel: "Danie dnia",
+                  drawerIcon: ({ focused }) => (
+                    <Ionicons
+                      name="home"
+                      size={30}
+                      color={focused ? "#BB0000" : Colors.textGray}
+                    />
+                  ),
+                  drawerItemStyle: { display: "none" },
+                  headerLeft: () => (
+                    <TouchableOpacity
+                      style={{ marginLeft: 20 }}
+                      onPress={() => navigation.goBack()}
+                    >
+                      <Image
+                        source={require("./assets/img/Drawer/back-arrow.png")}
+                        style={{
+                          marginLeft: 10,
+                          width: 25,
+                          resizeMode: "contain",
+                        }}
+                      />
+                    </TouchableOpacity>
+                  ),
+                })}
+              />
+              <Drawer.Screen
+                name="Admin Page"
+                component={AdminPage}
+                options={({ navigation }) => ({
+                  drawerLabel: "Panel admin",
+                  drawerIcon: ({ focused }) => (
+                    <Ionicons
+                      name="home"
+                      size={30}
+                      color={focused ? "#BB0000" : Colors.textGray}
+                    />
+                  ),
+                  drawerItemStyle: { display: "none" },
+                  headerLeft: () => (
+                    <TouchableOpacity
+                      style={{ marginLeft: 20 }}
+                      onPress={() => navigation.goBack()}
+                    >
+                      <Image
+                        source={require("./assets/img/Drawer/back-arrow.png")}
+                        style={{
+                          marginLeft: 10,
+                          width: 25,
+                          resizeMode: "contain",
+                        }}
+                      />
+                    </TouchableOpacity>
+                  ),
+                })}
+              />
+              <Drawer.Screen
+                name="Orderer Page"
+                component={OrdererPage}
+                options={({ navigation }) => ({
+                  drawerLabel: "Panel zamawiającego",
+                  drawerIcon: ({ focused }) => (
+                    <Ionicons
+                      name="home"
+                      size={30}
+                      color={focused ? "#BB0000" : Colors.textGray}
+                    />
+                  ),
+                  drawerItemStyle: { display: "none" },
+                  headerLeft: () => (
+                    <TouchableOpacity
+                      style={{ marginLeft: 20 }}
+                      onPress={() => navigation.goBack()}
+                    >
+                      <Image
+                        source={require("./assets/img/Drawer/back-arrow.png")}
+                        style={{
+                          marginLeft: 10,
+                          width: 25,
+                          resizeMode: "contain",
+                        }}
+                      />
+                    </TouchableOpacity>
+                  ),
+                })}
+              />
+              <Drawer.Screen
+                name="MyAccount Page"
+                component={MyAccountPage}
+                options={({ navigation }) => ({
+                  drawerLabel: "Moje konto",
+                  drawerIcon: ({ focused }) => (
+                    <Ionicons
+                      name="home"
+                      size={30}
+                      color={focused ? "#BB0000" : Colors.textGray}
+                    />
+                  ),
+                  drawerItemStyle: { display: "none" },
+                  headerLeft: () => (
+                    <TouchableOpacity
+                      style={{ marginLeft: 20 }}
+                      onPress={() => navigation.goBack()}
+                    >
+                      <Image
+                        source={require("./assets/img/Drawer/back-arrow.png")}
+                        style={{
+                          marginLeft: 10,
+                          width: 25,
+                          resizeMode: "contain",
+                        }}
+                      />
+                    </TouchableOpacity>
+                  ),
+                })}
+              />
+
+              <Drawer.Screen
+                name="MyOrders Page"
+                component={MyOrdersPage}
+                options={({ navigation }) => ({
+                  drawerLabel: "Mój bilans",
+                  drawerIcon: ({ focused }) => (
+                    <Ionicons
+                      name="home"
+                      size={30}
+                      color={focused ? "#BB0000" : Colors.textGray}
+                    />
+                  ),
+                  drawerItemStyle: { display: "none" },
+                  headerLeft: () => (
+                    <TouchableOpacity
+                      style={{ marginLeft: 20 }}
+                      onPress={() => navigation.goBack()}
+                    >
+                      <Image
+                        source={require("./assets/img/Drawer/back-arrow.png")}
+                        style={{
+                          marginLeft: 10,
+                          width: 25,
+                          resizeMode: "contain",
+                        }}
+                      />
+                    </TouchableOpacity>
+                  ),
+                })}
+              />
+              <Drawer.Screen
+                name="MyBalance Page"
+                component={MyBalancePage}
+                options={({ navigation }) => ({
+                  drawerLabel: "Mój bilans",
+                  drawerIcon: ({ focused }) => (
+                    <Ionicons
+                      name="home"
+                      size={30}
+                      color={focused ? "#BB0000" : Colors.textGray}
+                    />
+                  ),
+                  drawerItemStyle: { display: "none" },
+                  headerLeft: () => (
+                    <TouchableOpacity
+                      style={{ marginLeft: 20 }}
+                      onPress={() => navigation.goBack()}
+                    >
+                      <Image
+                        source={require("./assets/img/Drawer/back-arrow.png")}
+                        style={{
+                          marginLeft: 10,
+                          width: 25,
+                          resizeMode: "contain",
+                        }}
+                      />
+                    </TouchableOpacity>
+                  ),
+                })}
+              />
+
+              <Drawer.Screen
+                name="Help Page"
+                component={HelpPage}
+                options={({ navigation }) => ({
+                  drawerLabel: "Pomoc",
+                  drawerIcon: ({ focused }) => (
+                    <Ionicons
+                      name="home"
+                      size={30}
+                      color={focused ? "#BB0000" : Colors.textGray}
+                    />
+                  ),
+                  drawerItemStyle: { display: "none" },
+                  headerLeft: () => (
+                    <TouchableOpacity
+                      style={{ marginLeft: 20 }}
+                      onPress={() => navigation.goBack()}
+                    >
+                      <Image
+                        source={require("./assets/img/Drawer/back-arrow.png")}
+                        style={{
+                          marginLeft: 10,
+                          width: 25,
+                          resizeMode: "contain",
+                        }}
+                      />
+                    </TouchableOpacity>
+                  ),
+                })}
+              />
+
               {Data.map((item, index) => (
                 <Drawer.Screen
                   key={index}
@@ -374,7 +472,7 @@ export default function App(props) {
                         onPress={() => navigation.goBack()}
                       >
                         <Image
-                          source={require("./assets/img/Home/back-arrow.png")}
+                          source={require("./assets/img/Drawer/back-arrow.png")}
                           style={{
                             marginLeft: 10,
                             width: 25,
@@ -383,6 +481,37 @@ export default function App(props) {
                         />
                       </TouchableOpacity>
                     ),
+                  })}
+                  initialParams={{ content: item }}
+                />
+              ))}
+              {dishesData.map((item, index) => (
+                <Drawer.Screen
+                  key={index}
+                  name={item.name}
+                  component={SingleDishPage}
+                  options={({ navigation }) => ({
+                    drawerItemStyle: { display: "none" },
+                    title: item.name,
+                    headerLeft: (props) => (
+                      <TouchableOpacity
+                        style={{ marginLeft: 20 }}
+                        onPress={() => navigation.goBack()}
+                      >
+                        <Image
+                          source={require("./assets/img/Drawer/back-arrow.png")}
+                          style={{
+                            marginLeft: 10,
+                            width: 25,
+                            resizeMode: "contain",
+                          }}
+                        />
+                      </TouchableOpacity>
+                    ),
+                    headerStyle: {
+                      elevation: 290,
+                      shadowColor: "black",
+                    },
                   })}
                   initialParams={{ content: item }}
                 />

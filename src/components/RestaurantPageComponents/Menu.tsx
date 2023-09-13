@@ -1,12 +1,14 @@
-import { StyleSheet, Text, View } from "react-native";
+import { View } from "react-native";
 import { useState } from "react";
-import Colors from "../../../../constants/Colors";
 import ButtonsGroup from "./MenuComponents/ButtonsGroup";
 import Sorted from "./MenuComponents/Sorted";
 import DishTypeSection from "./MenuComponents/DishTypeSection";
-import { dishTypes } from "../../../../constants/dishesData";
+import { dishTypes } from "../../../constants/dishesData";
 
-const Menu = ({ restaurantName }: any) => {
+//components
+import { MyText } from "../../../constants/DefaultElements";
+
+const Menu = ({ restaurantName, navigateToDish }) => {
   const dishTypesArray = [];
   const dishTypesLength = Object.keys(dishTypes).length;
   for (let i = 0; i < dishTypesLength; i++) {
@@ -18,16 +20,24 @@ const Menu = ({ restaurantName }: any) => {
   }
   return (
     <View>
-      <Text style={styles.h1}>Menu</Text>
+      <MyText fz={26} fw="700">
+        Menu
+      </MyText>
       <ButtonsGroup changeFilter={changeFilter} />
       <View style={{ minHeight: 390 }}>
         {filter == 0 && (
           <DishTypeSection
             dishType={dishTypesArray}
             restaurantName={restaurantName}
+            navigateToDish={navigateToDish}
           />
         )}
-        {filter == 1 && <Sorted restaurantName={restaurantName} />}
+        {filter == 1 && (
+          <Sorted
+            restaurantName={restaurantName}
+            navigateToDish={navigateToDish}
+          />
+        )}
 
         {dishTypesArray.map((dishType, index) => (
           <View key={index}>
@@ -36,6 +46,7 @@ const Menu = ({ restaurantName }: any) => {
                 key={index}
                 dishType={[dishType]}
                 restaurantName={restaurantName}
+                navigateToDish={navigateToDish}
               />
             )}
           </View>
@@ -46,11 +57,3 @@ const Menu = ({ restaurantName }: any) => {
 };
 
 export default Menu;
-
-const styles = StyleSheet.create({
-  h1: {
-    color: Colors.textGray,
-    fontWeight: "700",
-    fontSize: 26,
-  },
-});

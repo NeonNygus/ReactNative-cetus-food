@@ -1,6 +1,11 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View, Dimensions } from "react-native";
 import React from "react";
 import Ionicon from "@expo/vector-icons/Ionicons";
+
+//components
+import { MyText } from "../../constants/DefaultElements";
+
+const windowWidth = Dimensions.get("window").width;
 
 const Rating = ({ rating }) => {
   const starsAmount: number = rating;
@@ -10,7 +15,7 @@ const Rating = ({ rating }) => {
       <Ionicon
         key={i}
         name="star"
-        size={16}
+        size={(4 / 100) * windowWidth}
         color={"#FFC904"}
         style={{ marginHorizontal: 1 }}
       />
@@ -21,7 +26,7 @@ const Rating = ({ rating }) => {
       <Ionicon
         key={i}
         name="star-outline"
-        size={16}
+        size={(4 / 100) * windowWidth}
         style={{ marginHorizontal: 1 }}
       />
     );
@@ -29,7 +34,7 @@ const Rating = ({ rating }) => {
 
   return (
     <View style={{ flexDirection: "row", alignItems: "center" }}>
-      <Text style={{ fontSize: 19 }}>{starsAmount}/5</Text>
+      <MyText fz={(4 / 100) * windowWidth}>{starsAmount}/5</MyText>
       <View style={{ flexDirection: "row", marginLeft: 4 }}>{stars}</View>
     </View>
   );

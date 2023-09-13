@@ -29,9 +29,9 @@ export default [
   },
   {
     id: 5,
-    nick: "ninaskinska",
+    nick: "liliaskinska",
     password: "asdf",
-    name: "Nina",
+    name: "Lilia",
     orderer: false,
   },
 ];

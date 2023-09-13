@@ -1,10 +1,10 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import "dayjs/locale/pl";
-import Colors from "../../../../constants/Colors";
+import { MyText } from "../../constants/DefaultElements";
 
-import { useAfter } from "../../../store/useAfter";
+import { useAfter } from "../store/useAfter";
 
 const Clock = () => {
   const orderTime = dayjs().set("hour", 14).set("minute", 0).set("second", 0);
@@ -28,22 +28,13 @@ const Clock = () => {
   return (
     <View>
       {after ? null : (
-        <Text
-          style={{
-            margin: 6,
-            fontSize: 20,
-            color: Colors.primary,
-            fontWeight: "500",
-          }}
-        >
+        <MyText fz={20} fw="500" co="primary">
           {hours.toString()}h {minutes.toString().padStart(2, "0")}min{" "}
           {seconds.toString().padStart(2, "0")}s
-        </Text>
+        </MyText>
       )}
     </View>
   );
 };
 
 export default Clock;
-
-const styles = StyleSheet.create({});

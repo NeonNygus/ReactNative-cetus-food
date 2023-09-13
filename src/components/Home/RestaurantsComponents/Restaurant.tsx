@@ -1,6 +1,17 @@
-import { View, Text, StyleSheet, Image } from "react-native";
-import Colors from "../../../../constants/Colors";
+import {
+  View,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
 import { RestaurantType } from "../Restaurants";
+
+//components
+import Rating from "../../Rating";
+import { MyText } from "../../../../constants/DefaultElements";
+
+const windowWidth = Dimensions.get("window").width;
 
 type RestaurantProps = {
   content: RestaurantType;
@@ -12,9 +23,12 @@ type RestaurantProps = {
 //   size: number;
 // };
 
-const Restaurant = ({ content }: RestaurantProps) => {
+const Restaurant = ({ content, navigateToRestaurant }) => {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() => navigateToRestaurant(content.name)}
+    >
       <View style={styles.image}>
         <Image
           source={content.image}
@@ -23,60 +37,50 @@ const Restaurant = ({ content }: RestaurantProps) => {
       </View>
       <View style={styles.info}>
         <View style={styles.infoHeader}>
-          <Text>{content.rating}/5</Text>
-          <Text style={textStyles(Colors.textGray, "700", 19).text}>
+          <Rating rating={content.rating} />
+          <MyText fz={22} fw="700">
             {content.name}
-          </Text>
-          <Text style={textStyles(Colors.shadedText, null, 12).text}>
+          </MyText>
+          {/* <MyText fz={12} co="shaded">
             {content.address}
-          </Text>
+          </MyText> */}
         </View>
-        <View style={styles.infoDesc}>
-          <Text style={textStyles(Colors.textGray, null, 14).text}>
-            Zamówienia do godz. {content.ordersHour}
-          </Text>
-          <Text style={textStyles(Colors.textGray, null, 14).text}>
+        {/* <View style={styles.infoDesc}>
+          <MyText>Zamówienia do godz. {content.ordersHour}</MyText>
+          <MyText>
             Ceny: {content.pricesRange[0]} zł - {content.pricesRange[1]} zł
-          </Text>
-        </View>
+          </MyText>
+        </View> */}
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
-
-const textStyles = (color: string, weight: string | null, size: number) =>
-  StyleSheet.create({
-    text: {
-      color: color,
-      fontWeight: weight,
-      fontSize: size,
-    },
-  });
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
-    margin: 7,
-    width: 316,
-    height: 300,
-    backgroundColor: "#ddd",
+    // width: 316,
+    // height: 300,
+    width: "100%",
+    height: (6 / 10) * windowWidth,
     borderRadius: 11,
     elevation: 4,
     overflow: "hidden",
   },
   image: {
-    height: "50%",
+    height: "65%",
   },
   info: {
-    height: "50%",
+    height: "35%",
     backgroundColor: "#fff",
-    justifyContent: "center",
+    padding: 0,
   },
   infoHeader: {
     flexDirection: "column",
-    height: "38%",
     width: "88%",
+    height: "90%",
     alignSelf: "center",
+    justifyContent: "center",
   },
   infoDesc: {
     height: "45%",

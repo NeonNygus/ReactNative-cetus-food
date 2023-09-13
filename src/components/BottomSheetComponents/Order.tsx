@@ -1,9 +1,12 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import { useOrder } from "../../../store/useOrder";
+import { useOrder } from "../../store/useOrder";
 
 import Ionicons from "@expo/vector-icons/Ionicons";
+
+//components
+import { MyText } from "../../../constants/DefaultElements";
 
 type OrderProps = {
   orderId: number;
@@ -31,32 +34,15 @@ const Order = (props: OrderProps) => {
             alignItems: "center",
           }}
         >
-          <Text
-            style={{
-              color: "#fff",
-            }}
-          >
-            {name}
-          </Text>
-          <Text
-            style={{
-              color: "#fff",
-              fontWeight: "700",
-              fontSize: 18,
-            }}
-          >
-            {price}zł
-          </Text>
+          <MyText co="white">{name}</MyText>
+          <MyText fz={18} fw="700" co="white">
+            {new Intl.NumberFormat("pl-PL", {
+              style: "currency",
+              currency: "PLN",
+            }).format(price)}
+          </MyText>
         </View>
-        {description && (
-          <Text
-            style={{
-              color: "#fff",
-            }}
-          >
-            {description}
-          </Text>
-        )}
+        {description && <MyText co="white">{description}</MyText>}
       </View>
       <View
         style={{
@@ -74,17 +60,10 @@ const Order = (props: OrderProps) => {
           }}
           onPress={() => removeOrder(props.orderId)}
         >
-          <Text
-            style={{
-              fontSize: 20,
-            }}
-          >
-            <Ionicons name="close-circle-outline" color={"white"} size={35} />
-          </Text>
+          <Ionicons name="close-circle-outline" color={"white"} size={35} />
         </TouchableOpacity>
       </View>
     </View>
   );
 };
 export default Order;
-const styles = StyleSheet.create({});

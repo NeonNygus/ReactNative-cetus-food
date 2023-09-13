@@ -1,8 +1,11 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React from "react";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { useState } from "react";
-import Colors from "../../../../../constants/Colors";
+import Colors from "../../../../constants/Colors";
+
+//components
+import { MyText } from "../../../../constants/DefaultElements";
 
 const ButtonsGroup = ({ changeFilter }) => {
   const [clicked, setClicked] = useState(0);
@@ -22,7 +25,9 @@ const ButtonsGroup = ({ changeFilter }) => {
             style={[styles.button, clicked == index && styles.buttonActive]}
             onPress={() => (setClicked(index), changeFilter(index))}
           >
-            <Text style={clicked == index && styles.textActive}>{item}</Text>
+            <MyText style={clicked == index && styles.textActive}>
+              {item}
+            </MyText>
           </TouchableOpacity>
         ))}
       </View>

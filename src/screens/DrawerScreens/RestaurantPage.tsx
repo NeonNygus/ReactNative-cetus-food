@@ -1,20 +1,18 @@
-import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
+import { StyleSheet, View, Image, ScrollView } from "react-native";
 import React from "react";
 import Colors from "../../../constants/Colors";
-import { TouchableHighlight } from "react-native-gesture-handler";
-import TouchableNativeFeedback from "react-native-gesture-handler/lib/typescript/components/touchables/TouchableNativeFeedback.android";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 //components
+import { MyText } from "../../../constants/DefaultElements";
 import Rating from "../../components/Rating";
-import Menu from "../../components/Home/RestaurantPageComponents/Menu";
-import BottomSheet from "../../components/Home/BottomSheet";
+import Menu from "../../components/RestaurantPageComponents/Menu";
+import BottomSheet from "../../components/BottomSheet";
 
-//content
-import dishesData from "../../../constants/dishesData";
-
-const RestaurantPage = ({ route }: any) => {
+const RestaurantPage = ({ route, navigation }) => {
   const data = route.params.content;
+  function navigateToDish(name) {
+    navigation.navigate(name);
+  }
   return (
     <>
       <ScrollView>
@@ -29,17 +27,19 @@ const RestaurantPage = ({ route }: any) => {
               source={data.image}
             />
             <View style={{ padding: 29 }}>
-              <Text style={styles.h1}>{data.name}</Text>
+              <MyText fz={26} fw="700">
+                {data.name}
+              </MyText>
               <View style={{ marginVertical: 5 }}>
                 <Rating rating={data.rating} />
               </View>
-              <Text style={{ lineHeight: 19, color: Colors.shadedText }}>
+              <MyText co="shaded" style={{ lineHeight: 19 }}>
                 {data.description}
-              </Text>
+              </MyText>
             </View>
           </View>
           <View style={{ paddingHorizontal: 29 }}>
-            <Menu restaurantName={data.name} />
+            <Menu restaurantName={data.name} navigateToDish={navigateToDish} />
           </View>
         </View>
       </ScrollView>
