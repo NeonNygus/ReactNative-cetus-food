@@ -2,7 +2,6 @@ import { StyleSheet, View, ScrollView } from "react-native";
 import React from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { NavigationContainer } from "@react-navigation/native";
 
 //components
 import { MyText } from "../../../constants/DefaultElements";

@@ -4,6 +4,7 @@ import Colors from "../../../../constants/Colors";
 import { TouchableOpacity } from "react-native";
 import restaurantsData from "../../../../constants/restaurantsData";
 import { useOrder } from "../../../store/useOrder";
+import { useNavigation } from "@react-navigation/native";
 
 import { MyText } from "../../../../constants/DefaultElements";
 
@@ -19,7 +20,9 @@ type DishProps = {
 //   size: number;
 // };
 
-const Dish = ({ content, navigateToDish }) => {
+const Dish = ({ content }) => {
+  const navigation = useNavigation();
+
   const { addOrder } = useOrder();
   const restaurant = restaurantsData.filter(
     (item) => item.name == content.restaurant
@@ -27,7 +30,7 @@ const Dish = ({ content, navigateToDish }) => {
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={() => navigateToDish(content.name)}
+      onPress={() => navigation.navigate(content.name)}
     >
       <View style={styles.image}>
         <Image

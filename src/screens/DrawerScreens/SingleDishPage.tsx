@@ -3,7 +3,6 @@ import { useState } from "react";
 import restaurantsData from "../../../constants/restaurantsData";
 import Clock from "../../components/Clock";
 import Colors from "../../../constants/Colors";
-
 //components
 import { MyText } from "../../../constants/DefaultElements";
 

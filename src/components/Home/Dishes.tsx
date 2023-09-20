@@ -15,7 +15,7 @@ export type DishType = {
   type: string;
 };
 
-const Dishes = ({ navigateToDish }) => {
+const Dishes = () => {
   return (
     <View style={styles.container}>
       <View style={styles.dishesHeader}>
@@ -30,9 +30,7 @@ const Dishes = ({ navigateToDish }) => {
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         data={data}
-        renderItem={({ item }) => (
-          <Dish content={item} navigateToDish={navigateToDish} />
-        )}
+        renderItem={({ item }) => <Dish content={item} />}
         ItemSeparatorComponent={() => <View style={{ width: 17 }} />}
       />
     </View>

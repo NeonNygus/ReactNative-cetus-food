@@ -16,7 +16,7 @@ export type RestaurantType = {
   rating: number;
 };
 
-const Restaurants = ({ navigateToRestaurant }) => {
+const Restaurants = () => {
   return (
     <View style={styles.container}>
       <View style={styles.dishesHeader}>
@@ -27,11 +27,7 @@ const Restaurants = ({ navigateToRestaurant }) => {
       </View>
       <View style={{ alignItems: "center", gap: 10 }}>
         {data.map((item) => (
-          <Restaurant
-            key={item.id}
-            content={item}
-            navigateToRestaurant={navigateToRestaurant}
-          />
+          <Restaurant key={item.id} content={item} />
         ))}
       </View>
     </View>

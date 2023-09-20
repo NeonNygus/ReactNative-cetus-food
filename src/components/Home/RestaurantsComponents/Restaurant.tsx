@@ -6,6 +6,7 @@ import {
   Dimensions,
 } from "react-native";
 import { RestaurantType } from "../Restaurants";
+import { useNavigation } from "@react-navigation/native";
 
 //components
 import Rating from "../../Rating";
@@ -23,11 +24,12 @@ type RestaurantProps = {
 //   size: number;
 // };
 
-const Restaurant = ({ content, navigateToRestaurant }) => {
+const Restaurant = ({ content }) => {
+  const navigation = useNavigation();
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={() => navigateToRestaurant(content.name)}
+      onPress={() => navigation.navigate(content.name)}
     >
       <View style={styles.image}>
         <Image

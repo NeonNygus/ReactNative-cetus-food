@@ -45,7 +45,7 @@ const Drawer = createDrawerNavigator();
 
 const settingsNavItems = [
   {
-    label: "Panel Admina",
+    label: "Panel admina",
     href: "Admin Page",
   },
   {
@@ -79,6 +79,7 @@ export default function App() {
             <Orderer setOrderer={setOrderer} />
           )}
           <NavigationContainer>
+            {/* podzielić drawera */}
             <Drawer.Navigator
               drawerContent={(props) => {
                 return (
@@ -161,20 +162,6 @@ export default function App() {
                             }}
                           />
                         ))}
-                        {/* <DrawerItem
-                          label="Panel admina"
-                          labelStyle={styles.text}
-                          onPress={() => {
-                            props.navigation.navigate("Admin Page");
-                          }}
-                        />
-                        <DrawerItem
-                          label="Panel zamawiającego"
-                          labelStyle={styles.text}
-                          onPress={() => {
-                            props.navigation.navigate("Orderer Page");
-                          }}
-                        /> */}
                         <DrawerItem
                           label="Moje zamówienia"
                           labelStyle={styles.text}
@@ -196,11 +183,6 @@ export default function App() {
                             props.navigation.navigate("MyBalance Page");
                           }}
                         />
-                        {/* <DrawerItem
-                          label="Ustawienia"
-                          labelStyle={styles.text}
-                          onPress={() => {}}
-                        /> */}
                         <DrawerItem
                           label="Pomoc"
                           labelStyle={styles.text}
@@ -311,7 +293,7 @@ export default function App() {
                   headerLeft: () => (
                     <TouchableOpacity
                       style={{ marginLeft: 20 }}
-                      onPress={() => navigation.goBack()}
+                      onPress={() => {}}
                     >
                       <Image
                         source={require("./assets/img/Drawer/back-arrow.png")}
