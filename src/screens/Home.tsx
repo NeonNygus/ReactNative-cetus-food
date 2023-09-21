@@ -5,6 +5,7 @@ import Header from "../components/Home/Header";
 import Dishes from "../components/Home/Dishes";
 import Restaurants from "../components/Home/Restaurants";
 import BottomSheet from "../components/BottomSheet";
+import { Stack, Text, SizableText, XStack, YStack } from "tamagui";
 export default function Home() {
   return (
     <>

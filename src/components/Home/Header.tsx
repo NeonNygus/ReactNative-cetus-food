@@ -1,6 +1,7 @@
 import { View, StyleSheet } from "react-native";
 import { useUser } from "../../store/useUser";
 import { useAfter } from "../../store/useAfter";
+import { Stack, Text, SizableText, XStack, YStack } from "tamagui";
 
 //components
 import Clock from "../Clock";
@@ -44,7 +45,6 @@ const Header = () => {
             )}
             <Clock />
           </View>
-          {/* <OrderEditor /> */}
         </View>
       )}
     </>

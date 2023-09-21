@@ -1,7 +1,7 @@
 import { View, FlatList, StyleSheet } from "react-native";
 //content
 import data from "../../../constants/dishesData";
-
+import { Stack, Text, SizableText, XStack, YStack } from "tamagui";
 //components
 import Dish from "./DishesComponents/Dish";
 import { MyText } from "../../../constants/DefaultElements";
@@ -22,6 +22,7 @@ const Dishes = () => {
         <MyText fz={18} fw="700">
           Zamów to co znajomi
         </MyText>
+
         <MyText>Więcej...</MyText>
       </View>
 

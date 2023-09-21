@@ -2,13 +2,13 @@ import { create } from "zustand";
 import usersData from "../../constants/usersData";
 
 type Login = {
-  user: {
+  user?: {
     id: 1;
     nick: string;
     password: string;
     name: string;
     orderer: boolean;
-  } | null;
+  };
   authorizeLogin: (id: number) => void;
 };
 export const useUser = create<Login>()((set) => ({
