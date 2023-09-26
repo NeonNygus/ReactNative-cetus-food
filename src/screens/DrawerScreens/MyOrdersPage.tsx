@@ -1,9 +1,8 @@
 import { StyleSheet, View, Pressable } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useState } from "react";
-import { TextInput } from "react-native-paper";
+import { Input } from "tamagui";
 import { MyText } from "../../../constants/DefaultElements";
-import PagerView from "react-native-pager-view";
 
 const data = [
   {
@@ -39,43 +38,33 @@ const MyOrdersPage = () => {
     }
   };
   return (
-    <PagerView style={{ flex: 1, backgroundColor: "#ADF" }} initialPage={0}>
-      <View style={styles.container} key="1">
-        <View>
-          <MyText rfz={30} w700>
-            Historia moich zamówień
-          </MyText>
-          <MyText rfz={20}>Poznaj swoją historię posiłków</MyText>
-        </View>
-        <View>
-          {showPicker && (
-            <DateTimePicker
-              mode="date"
-              display="spinner"
-              value={date}
-              onChange={onChange}
+    <View style={styles.container} key="1">
+      <View>
+        <MyText rfz={30} w700>
+          Historia moich zamówień
+        </MyText>
+        <MyText rfz={20}>Poznaj swoją historię posiłków</MyText>
+      </View>
+      <View>
+        {showPicker && (
+          <DateTimePicker
+            mode="date"
+            display="spinner"
+            value={date}
+            onChange={onChange}
+          />
+        )}
+        {!showPicker && (
+          <Pressable onPress={toggleDatepicker}>
+            <Input
+              placeholder="Sat Aug 21 2004"
+              onPressIn={toggleDatepicker}
+              editable={false}
             />
-          )}
-          {!showPicker && (
-            <Pressable onPress={toggleDatepicker}>
-              <TextInput
-                placeholder="Sat Aug 21 2004"
-                editable={false}
-                onPressIn={toggleDatepicker}
-              />
-            </Pressable>
-          )}
-        </View>
-        <View>
-          <View>
-            <MyText>Dupa</MyText>
-          </View>
-        </View>
+          </Pressable>
+        )}
       </View>
-      <View key="2" style={{ flex: 1 }}>
-        <MyText>Dupa</MyText>
-      </View>
-    </PagerView>
+    </View>
   );
 };
 

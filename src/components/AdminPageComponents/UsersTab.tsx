@@ -56,98 +56,102 @@ const data = [
 
 const UsersTab = () => {
   return (
-    <View style={styles.container}>
-      <View style={styles.section}>
-        <MyText rfz={18} w700>
-          Dodawanie użytkownika:
-        </MyText>
-        <View
-          style={{
-            width: "100%",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <MyText rfz={18}>Imie: </MyText>
-          <TextInput placeholder="Podaj imie" style={styles.textInput} />
-        </View>
-        <View
-          style={{
-            width: "100%",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <MyText rfz={18}>Nazwisko: </MyText>
-          <TextInput placeholder="Podaj nazwisko" style={styles.textInput} />
-        </View>
-        <View
-          style={{
-            width: "100%",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <MyText rfz={18}>E-mail: </MyText>
-          <TextInput placeholder="Podaj e-mail" style={styles.textInput} />
-        </View>
-        <View
-          style={{
-            width: "100%",
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 20,
-          }}
-        >
-          <MyText rfz={18}>Rola/Status: </MyText>
-          <SelectDropdown
-            data={["Admin", "Pracownik", "Student (debil)"]}
-            defaultButtonText="Wybierz rolę"
-            buttonTextStyle={{
-              textAlign: "left",
-              fontSize: 15,
+    <ScrollView>
+      <View style={styles.container}>
+        <View style={styles.section}>
+          <MyText rfz={18} w700>
+            Dodawanie użytkownika:
+          </MyText>
+          <View
+            style={{
+              width: "100%",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
             }}
-            buttonStyle={{
-              width: "50%",
-              height: 30,
-              borderColor: Colors.shadedText,
-              borderWidth: 1,
-              borderRadius: 10,
-              backgroundColor: "#FFF",
-              justifyContent: "flex-start",
+          >
+            <MyText rfz={18}>Imie: </MyText>
+            <TextInput placeholder="Podaj imie" style={styles.textInput} />
+          </View>
+          <View
+            style={{
+              width: "100%",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
             }}
-            buttonTextAfterSelection={(selectedItem, index) => {
-              // text represented after item is selected
-              // if data array is an array of objects then return selectedItem.property to render after item is selected
-              return selectedItem;
+          >
+            <MyText rfz={18}>Nazwisko: </MyText>
+            <TextInput placeholder="Podaj nazwisko" style={styles.textInput} />
+          </View>
+          <View
+            style={{
+              width: "100%",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
             }}
-            rowTextForSelection={(item, index) => {
-              // text represented for each item in dropdown
-              // if data array is an array of objects then return item.property to represent item in dropdown
-              return item;
+          >
+            <MyText rfz={18}>E-mail: </MyText>
+            <TextInput placeholder="Podaj e-mail" style={styles.textInput} />
+          </View>
+          <View
+            style={{
+              width: "100%",
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 20,
             }}
-          />
+          >
+            <MyText rfz={18}>Rola/Status: </MyText>
+            <SelectDropdown
+              data={["Admin", "Pracownik", "Student (debil)"]}
+              defaultButtonText="Wybierz rolę"
+              buttonTextStyle={{
+                textAlign: "left",
+                fontSize: 15,
+              }}
+              buttonStyle={{
+                width: "50%",
+                height: 30,
+                borderColor: Colors.shadedText,
+                borderWidth: 1,
+                borderRadius: 10,
+                backgroundColor: "#FFF",
+                justifyContent: "flex-start",
+              }}
+              buttonTextAfterSelection={(selectedItem, index) => {
+                // text represented after item is selected
+                // if data array is an array of objects then return selectedItem.property to render after item is selected
+                return selectedItem;
+              }}
+              rowTextForSelection={(item, index) => {
+                // text represented for each item in dropdown
+                // if data array is an array of objects then return item.property to represent item in dropdown
+                return item;
+              }}
+            />
+          </View>
+          <TouchableOpacity style={styles.button}>
+            <MyText style={{ color: Colors.primary }}>
+              Dodaj użytkownika +
+            </MyText>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.button}>
-          <MyText style={{ color: Colors.primary }}>Dodaj użytkownika +</MyText>
-        </TouchableOpacity>
+        <View style={styles.section}>
+          <MyText rfz={18}>Lista użytkowników:</MyText>
+          <View style={{ gap: 20 }}>
+            <TextInput
+              placeholder="Kogo szukasz..."
+              style={[styles.textInput, { height: 40, width: "100%" }]}
+            />
+            {data.map((item, index) => (
+              <UserCard user={item} key={index} />
+            ))}
+          </View>
+        </View>
       </View>
-      <View style={styles.section}>
-        <MyText rfz={18}>Lista użytkowników:</MyText>
-        <View style={{ gap: 20 }}>
-          <TextInput
-            placeholder="Kogo szukasz..."
-            style={[styles.textInput, { height: 40, width: "100%" }]}
-          />
-          {data.map((item, index) => (
-            <UserCard user={item} key={index} />
-          ))}
-        </View>
-      </View>
-    </View>
+    </ScrollView>
   );
 };
 

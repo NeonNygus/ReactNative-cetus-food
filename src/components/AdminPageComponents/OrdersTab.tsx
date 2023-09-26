@@ -10,7 +10,8 @@ import React, { useState, useEffect } from "react";
 import Colors from "../../../constants/Colors";
 import { MyText } from "../../../constants/DefaultElements";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { Checkbox } from "react-native-paper";
+import { Checkbox, SizeTokens } from "tamagui";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 //components
 import OrderCard from "./OrdersTabComponents/OrderCard";
@@ -60,7 +61,6 @@ const OrdersTab = () => {
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [dateOfHistoryString, setDateOfHistoryString] = useState("");
-  const [isSelected, setSelection] = useState(false);
   const toggleTimePicker = () => {
     setShowTimePicker(!showTimePicker);
   };
@@ -138,12 +138,19 @@ const OrdersTab = () => {
               placeholder="Nowym zamawiającym będzie"
               style={styles.textInput}
             />
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <View
+              style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
+            >
               <MyText rfz={17}>Pracownicy zamawiają na zmianę: </MyText>
               <Checkbox
-                status={isSelected ? "checked" : "unchecked"}
-                onPress={() => setSelection((s) => !s)}
-              />
+                size="$5"
+                borderColor={Colors.shadedText}
+                borderWidth={2}
+              >
+                <Checkbox.Indicator>
+                  <Ionicons name="checkmark" size={17} />
+                </Checkbox.Indicator>
+              </Checkbox>
             </View>
           </View>
         </View>

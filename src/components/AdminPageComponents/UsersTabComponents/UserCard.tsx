@@ -14,7 +14,8 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import Colors from "../../../../constants/Colors";
 import SelectDropdown from "react-native-select-dropdown";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { Checkbox } from "react-native-paper";
+import { Avatar, Checkbox } from "tamagui";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import {
   Table,
   TableWrapper,
@@ -256,12 +257,19 @@ const UserCard = ({ user }) => {
                 />
               </Pressable>
             </View>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <View
+              style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
+            >
               <MyText rfz={17}>Zablokuj użytkownika na stałe:</MyText>
               <Checkbox
-                status={isSelected ? "checked" : "unchecked"}
-                onPress={() => setSelection((s) => !s)}
-              />
+                size="$5"
+                borderColor={Colors.shadedText}
+                borderWidth={2}
+              >
+                <Checkbox.Indicator>
+                  <Ionicons name="checkmark" size={17} />
+                </Checkbox.Indicator>
+              </Checkbox>
             </View>
             <TouchableOpacity style={styles.button}>
               <MyText style={{ color: Colors.primary }}>Zapisz zmiany</MyText>

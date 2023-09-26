@@ -1,5 +1,5 @@
 import { StyleSheet, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native";
 
 import { useOrder } from "../../store/useOrder";
 
@@ -20,7 +20,7 @@ const Order = (props: OrderProps) => {
   return (
     <View
       style={{
-        width: "100%",
+        width: "90%",
         marginTop: 9,
         marginBottom: 9,
         flexDirection: "row",

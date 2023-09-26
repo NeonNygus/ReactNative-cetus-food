@@ -5,7 +5,8 @@ import Header from "../components/Home/Header";
 import Dishes from "../components/Home/Dishes";
 import Restaurants from "../components/Home/Restaurants";
 import BottomSheet from "../components/BottomSheet";
-import { Stack, Text, SizableText, XStack, YStack } from "tamagui";
+import { Stack, Text, SizableText, XStack, YStack, Sheet } from "tamagui";
+import { SheetDemo } from "../components/Sheet";
 export default function Home() {
   return (
     <>
@@ -16,8 +17,8 @@ export default function Home() {
           <Restaurants />
         </View>
       </ScrollView>
-
-      <BottomSheet />
+      <SheetDemo />
+      {/* <BottomSheet /> */}
     </>
   );
 }

@@ -5,13 +5,14 @@ import {
   createDrawerNavigator,
 } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
-import { List } from "react-native-paper";
+import { YGroup, ListItem, Accordion, Text, Square } from "tamagui";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { View, Image, StyleSheet } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 //screens
 import Home from "../screens/Home";
+import DishOfTheDayPage from "../screens/DrawerScreens/DishOfTheDayPage";
 import RestaurantPage from "../screens/DrawerScreens/RestaurantPage";
 import SingleDishPage from "../screens/DrawerScreens/SingleDishPage";
 import OrdererPage from "../screens/DrawerScreens/OrdererPage";
@@ -28,7 +29,6 @@ import Clock from "./Clock";
 //content
 import Data from "../../constants/restaurantsData";
 import dishesData from "../../constants/dishesData";
-import DishOfTheDayPage from "../screens/DrawerScreens/DishOfTheDayPage";
 
 const Drawer = createDrawerNavigator();
 
@@ -97,25 +97,37 @@ export default function DrawerNavigator() {
                 </View>
               </View>
               <View style={{ height: "80%" }}>
-                <List.Section
-                  title="Jedzenie"
-                  style={styles.drawerSection}
-                  titleStyle={styles.h1}
-                >
-                  <List.Accordion
-                    title="Dostępne restauracje"
-                    titleStyle={{
-                      fontSize: 13,
-                    }}
-                    style={styles.text}
-                  >
-                    <DrawerItemList
-                      {...props}
-                      items={props.state.routes.filter(
-                        (route) => route.name !== "Home"
-                      )}
-                    />
-                  </List.Accordion>
+                <YGroup style={styles.drawerSection}>
+                  <Text>Jedzenie</Text>
+                  <Accordion overflow="hidden" width="$17" type="multiple">
+                    <Accordion.Item value="a1">
+                      <Accordion.Trigger
+                        flexDirection="row"
+                        justifyContent="space-between"
+                      >
+                        {({ open }) => (
+                          <>
+                            <Text>Dostępne restauracje</Text>
+                            <Square
+                              animation="quick"
+                              rotate={open ? "180deg" : "0deg"}
+                            >
+                              <Ionicons name="arrow-down" />
+                            </Square>
+                          </>
+                        )}
+                      </Accordion.Trigger>
+                      <Accordion.Content>
+                        <DrawerItemList
+                          {...props}
+                          items={props.state.routes.filter(
+                            (route) => route.name !== "Home"
+                          )}
+                        />
+                      </Accordion.Content>
+                    </Accordion.Item>
+                  </Accordion>
+                  {/* </List.Accordion> */}
                   <DrawerItem
                     label="Dania dnia"
                     labelStyle={styles.text}
@@ -123,12 +135,9 @@ export default function DrawerNavigator() {
                       props.navigation.navigate("DishOfTheDay Page");
                     }}
                   />
-                </List.Section>
-                <List.Section
-                  title="Ustawienia"
-                  style={styles.drawerSection}
-                  titleStyle={styles.h1}
-                >
+                </YGroup>
+                <YGroup style={styles.drawerSection}>
+                  <Text>Ustawienia</Text>
                   {settingsNavItems.map((item, index) => (
                     <DrawerItem
                       key={index}
@@ -139,19 +148,11 @@ export default function DrawerNavigator() {
                       }}
                     />
                   ))}
-                </List.Section>
+                </YGroup>
               </View>
-              <List.Section
-                style={{
-                  width: "76%",
-                  marginLeft: "12%",
-                  borderStyle: "dotted",
-                  borderTopColor: "#AAA",
-                  borderTopWidth: 2,
-                }}
-              >
+              <YGroup style={styles.drawerSection}>
                 <Clock />
-              </List.Section>
+              </YGroup>
             </DrawerContentScrollView>
           );
         }}
